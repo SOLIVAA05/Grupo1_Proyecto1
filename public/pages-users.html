@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Gestor de Usuarios - GestorArchivos</title>
+  <script> if (!localStorage.getItem('jwt_token')) { window.location.href = 'pages-login.html'; } </script>
+  <link href="NiceAdmin/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="NiceAdmin/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="NiceAdmin/assets/css/style.css" rel="stylesheet">
+  <!-- NUESTRA HOJA DE ESTILOS PERSONALIZADA -->
+<link href="NiceAdmin/assets/css/custom-style.css" rel="stylesheet">
+</head>
+<body>
+  <!-- Incluirá el Header y Sidebar (se hará con JS para no repetir código) -->
+  <div id="main-header"></div>
+  <div id="main-sidebar"></div>
+
+  <main id="main" class="main">
+    <div class="pagetitle">
+      <h1>Gestor de Usuarios</h1>
+      <nav><ol class="breadcrumb"><li class="breadcrumb-item"><a href="index.html">Inicio</a></li><li class="breadcrumb-item active">Usuarios</li></ol></nav>
+    </div>
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Lista de Usuarios</h5>
+              <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#user-modal">Añadir Usuario</button>
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Rol</th>
+                    <th scope="col">Departamento</th>
+                    <th scope="col">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="users-table-body">
+                  <!-- Los datos se cargarán aquí con JavaScript -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal para Crear/Editar Usuario -->
+  <div class="modal fade" id="user-modal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modal-title">Añadir Nuevo Usuario</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="user-form">
+            <input type="hidden" id="userId" name="userId">
+            <div class="mb-3">
+              <label for="nombre" class="form-label">Nombre Completo</label>
+              <input type="text" class="form-control" id="nombre" required>
+            </div>
+            <div class="mb-3">
+              <label for="user_name" class="form-label">Nombre de Usuario</label>
+              <input type="text" class="form-control" id="user_name" required>
+            </div>
+            <div class="mb-3" id="password-field">
+              <label for="password" class="form-label">Contraseña</label>
+              <input type="password" class="form-control" id="password" required>
+            </div>
+            <div class="mb-3">
+              <label for="idRol" class="form-label">Rol</label>
+              <select class="form-select" id="idRol" required></select>
+            </div>
+            <div class="mb-3">
+              <label for="idDepartamento" class="form-label">Departamento</label>
+              <select class="form-select" id="idDepartamento" required></select>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <button type="submit" form="user-form" class="btn btn-primary" id="save-user-button">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="NiceAdmin/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="NiceAdmin/assets/js/main.js"></script>
+  <!-- Nuestro script para la lógica de esta página -->
+  <script src="NiceAdmin/assets/js/users.js"></script>
+</body>
+</html>
