@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Dashboard - Gestor de Archivos</title>
+
+  <!-- SCRIPT GUARDIÁN -->
+  <script>
+    const token = localStorage.getItem('jwt_token');
+    if (!token) {
+      window.location.href = 'pages-login.html';
+    }
+  </script>
+  <!-- FIN DEL SCRIPT GUARDIÁN -->
+
+  <!-- Rutas a los assets dentro de la carpeta NiceAdmin -->
+  <link href="NiceAdmin/assets/img/favicon.png" rel="icon">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <link href="NiceAdmin/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="NiceAdmin/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="NiceAdmin/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="NiceAdmin/assets/css/style.css" rel="stylesheet">
+  <!-- NUESTRA HOJA DE ESTILOS PERSONALIZADA -->
+<link href="NiceAdmin/assets/css/custom-style.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <header id="header" class="header fixed-top d-flex align-items-center">
+    <div class="d-flex align-items-center justify-content-between">
+      <a href="index.html" class="logo d-flex align-items-center">
+        <img src="NiceAdmin/assets/img/logo.png" alt="">
+        <span class="d-none d-lg-block">GestorArchivos</span>
+      </a>
+      <i class="bi bi-list toggle-sidebar-btn"></i>
+    </div>
+    <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center">
+        <li class="nav-item dropdown pe-3">
+          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+            <img src="NiceAdmin/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+            <!-- ID AÑADIDO PARA EL NOMBRE CORTO -->
+            <span id="profile-name-short" class="d-none d-md-block dropdown-toggle ps-2"></span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+            <li class="dropdown-header">
+              <!-- ID AÑADIDO PARA EL NOMBRE COMPLETO -->
+              <h6 id="profile-name-full"></h6>
+              <span>Usuario del Sistema</span>
+            </li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item d-flex align-items-center" href="#"><i class="bi bi-person"></i><span>Mi Perfil</span></a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a id="logout-button" class="dropdown-item d-flex align-items-center" href="#"><i class="bi bi-box-arrow-right"></i><span>Cerrar Sesión</span></a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <aside id="sidebar" class="sidebar">
+    <ul class="sidebar-nav" id="sidebar-nav">
+      <li class="nav-item"><a class="nav-link " href="index.html"><i class="bi bi-grid"></i><span>Dashboard</span></a></li>
+      <li class="nav-heading">Gestión</li>
+<li class="nav-item">
+  <a class="nav-link collapsed" href="pages-users.html">
+    <i class="bi bi-people"></i>
+    <span>Usuarios</span>
+  </a>
+</li>
+<li class="nav-item">
+  <a class="nav-link collapsed" href="pages-documents.html">
+    <i class="bi bi-folder"></i>
+    <span>Documentos</span>
+  </a>
+</li>
+    </ul>
+  </aside>
+
+  <main id="main" class="main">
+    <div class="pagetitle">
+      <h1>Dashboard</h1>
+      <nav><ol class="breadcrumb"><li class="breadcrumb-item"><a href="index.html">Inicio</a></li><li class="breadcrumb-item active">Dashboard</li></ol></nav>
+    </div>
+    <section class="section dashboard">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Bienvenido al Sistema de Gestión de Archivos</h5>
+              <p>Utiliza el menú de la izquierda para navegar por las diferentes secciones del sistema.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="footer" class="footer">
+    <div class="copyright">&copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved</div>
+    <div class="credits">Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a></div>
+  </footer>
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="NiceAdmin/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="NiceAdmin/assets/js/main.js"></script>
+
+  <!-- NUESTROS SCRIPTS PERSONALIZADOS -->
+  <script>
+    // --- SCRIPT PARA MOSTRAR EL NOMBRE DEL USUARIO ---
+    document.addEventListener("DOMContentLoaded", function() {
+        const token = localStorage.getItem('jwt_token');
+        if (token) {
+            try {
+                // Decodificar el token para obtener los datos del usuario
+                const payload = JSON.parse(atob(token.split('.')[1]));
+                const userName = payload.data.nombre;
+
+                // Actualizar los nombres en el perfil
+                const nameShortElement = document.getElementById('profile-name-short');
+                const nameFullElement = document.getElementById('profile-name-full');
+
+                if(nameShortElement) nameShortElement.textContent = userName.split(' ')[0]; // Muestra solo el primer nombre
+                if(nameFullElement) nameFullElement.textContent = userName; // Muestra el nombre completo
+
+            } catch (e) {
+                console.error("Error al decodificar el token:", e);
+                // Si el token es inválido, redirigir al login
+                localStorage.removeItem('jwt_token');
+                window.location.href = 'pages-login.html';
+            }
+        }
+    });
+
+    // --- SCRIPT PARA CERRAR SESIÓN ---
+    document.getElementById('logout-button').addEventListener('click', function(e) {
+        e.preventDefault();
+        localStorage.removeItem('jwt_token');
+        window.location.href = 'pages-login.html';
+    });
+  </script>
+
+</body>
+</html>
