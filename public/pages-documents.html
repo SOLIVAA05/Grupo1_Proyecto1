@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><title>Gestor de Documentos</title>
+  <script>if (!localStorage.getItem('jwt_token')) { window.location.href = 'pages-login.html'; }</script>
+  <link href="NiceAdmin/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="NiceAdmin/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="NiceAdmin/assets/css/style.css" rel="stylesheet">
+  <link href="NiceAdmin/assets/css/custom-style.css" rel="stylesheet">
+</head>
+<body>
+  <header id="header" class="header fixed-top d-flex align-items-center"></header>
+  <aside id="sidebar" class="sidebar"></aside>
+  <main id="main" class="main">
+    <div class="pagetitle"><h1>Gestor de Documentos</h1><nav><ol class="breadcrumb"><li class="breadcrumb-item"><a href="index.html">Inicio</a></li><li class="breadcrumb-item active">Documentos</li></ol></nav></div>
+    <section class="section"><div class="row"><div class="col-lg-12"><div class="card"><div class="card-body"><h5 class="card-title">Lista de Documentos</h5><button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#upload-modal">Subir Documento</button><table class="table table-striped"><thead><tr><th scope="col">#</th><th scope="col">Nombre</th><th scope="col">Subido por</th><th scope="col">Fecha</th><th scope="col">Tamaño</th><th scope="col">Acciones</th></tr></thead><tbody id="documents-table-body"></tbody></table></div></div></div></div></section>
+  </main>
+  <div class="modal fade" id="upload-modal" tabindex="-1"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h5 class="modal-title">Subir Nuevo Documento</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><form id="upload-form"><div class="mb-3"><label for="idCarpeta" class="form-label">Carpeta de Destino</label><select class="form-select" id="idCarpeta" required></select></div><div class="mb-3"><label for="documentoFile" class="form-label">Seleccionar Archivo</label><input type="file" class="form-control" id="documentoFile" required></div></form></div><div class="modal-footer"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button><button type="submit" form="upload-form" class="btn btn-primary">Subir</button></div></div></div></div>
+  <script src="NiceAdmin/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="NiceAdmin/assets/js/main.js"></script>
+  <script src="NiceAdmin/assets/js/documents.js"></script>
+</body>
+</html>
+
+ <!-- NUEVO: Modal para Editar Documento -->
+  <div class="modal fade" id="edit-modal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header"><h5 class="modal-title">Editar Documento</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+        <div class="modal-body">
+          <form id="edit-form" enctype="multipart/form-data">
+            <input type="hidden" id="edit-doc-id">
+            <div class="mb-3">
+              <label for="edit-nombre" class="form-label">Nombre del Archivo Actual</label>
+              <input type="text" class="form-control" id="edit-nombre" disabled>
+            </div>
+            <div class="mb-3">
+              <label for="edit-documentoFile" class="form-label">Reemplazar Archivo (Opcional)</label>
+              <input type="file" class="form-control" id="edit-documentoFile" name="documento">
+              <div class="form-text">Si subes un nuevo archivo, el anterior se guardará como una versión.</div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button><button type="submit" form="edit-form" class="btn btn-primary">Guardar Cambios</button></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="NiceAdmin/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="NiceAdmin/assets/js/main.js"></script>
+  <script src="NiceAdmin/assets/js/documents.js"></script>
+</body>
+</html>

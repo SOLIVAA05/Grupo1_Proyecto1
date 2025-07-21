@@ -1,0 +1,105 @@
+/* Paleta de Colores del Proyecto */
+:root {
+  --color-primary: #0f407a;   /* .color2 - Azul oscuro para elementos principales */
+  --color-secondary: #5967c5; /* .color3 - Azul/Violeta para acentos */
+  --color-dark: #111d38;      /* .color1 - Azul muy oscuro para fondos y texto */
+  --color-light: #c196fa;     /* .color4 - Lavanda para hover y elementos suaves */
+  --color-accent: #ffcff4;    /* .color5 - Rosa pálido para notificaciones o acentos especiales */
+}
+
+/* --- ESTILOS GENERALES --- */
+
+/* Cambiar el color principal de los botones y enlaces */
+.btn-primary {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-secondary);
+  border-color: var(--color-secondary);
+}
+
+a {
+  color: var(--color-primary);
+}
+
+a:hover {
+  color: var(--color-secondary);
+}
+
+.pagetitle h1 {
+    color: var(--color-dark);
+}
+
+/* --- HEADER --- */
+.header {
+  background-color: #ffffff; /* Mantenemos el header blanco para contraste */
+}
+
+.header .logo span {
+  color: var(--color-dark);
+}
+
+/* --- SIDEBAR (MENÚ LATERAL) --- */
+.sidebar {
+  background-color: var(--color-dark);
+}
+
+.sidebar-nav .nav-link {
+  background: var(--color-dark);
+  color: #ffffff;
+}
+
+.sidebar-nav .nav-link i {
+  color: #ffffff;
+}
+
+.sidebar-nav .nav-link:hover {
+  background: var(--color-primary);
+  color: #ffffff;
+}
+
+.sidebar-nav .nav-link.collapsed {
+  color: #ffffff;
+  background: var(--color-dark);
+}
+
+.sidebar-nav .nav-link.collapsed i {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.sidebar-nav .nav-link.collapsed:hover {
+  background: var(--color-primary);
+  color: #ffffff;
+}
+
+.sidebar-nav .nav-link:not(.collapsed) {
+  background: var(--color-secondary);
+  color: #ffffff;
+}
+
+.sidebar-nav .nav-content a {
+    color: #ffffff;
+}
+
+.sidebar-nav .nav-content a:hover, .sidebar-nav .nav-content a.active {
+    background-color: var(--color-secondary);
+}
+
+/* --- BOTONES DE ACCIÓN EN TABLAS --- */
+.btn-warning {
+    background-color: var(--color-light);
+    border-color: var(--color-light);
+    color: var(--color-dark);
+}
+.btn-warning:hover {
+    background-color: #ad7bd1; /* Un poco más oscuro que el lavanda */
+    border-color: #ad7bd1;
+}
+
+.btn-danger {
+    background-color: #e65c5c; /* Mantenemos un rojo estándar para peligro */
+    border-color: #e65c5c;
+}
+
