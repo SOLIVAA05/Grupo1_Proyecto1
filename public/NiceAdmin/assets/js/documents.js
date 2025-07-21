@@ -9,6 +9,10 @@ document.addEventListener("DOMContentLoaded", function() {
     const uploadForm = document.getElementById('upload-form');
     const carpetaSelect = document.getElementById('idCarpeta');
     const uploadModal = new bootstrap.Modal(document.getElementById('upload-modal'));
+    
+    const editModal = new bootstrap.Modal(document.getElementById('edit-modal'));
+    const editForm = document.getElementById('edit-form');
+    let allDocumentsData = [];
 
     async function loadDocuments() {
         try {
@@ -16,6 +20,7 @@ document.addEventListener("DOMContentLoaded", function() {
             const result = await response.json();
             documentsTableBody.innerHTML = '';
             if (result.data && Array.isArray(result.data)) {
+                allDocumentsData = result.data;
                 result.data.forEach(doc => {
                     const row = `<tr>
                         <th scope="row">${doc.idArchivo}</th>
@@ -23,7 +28,10 @@ document.addEventListener("DOMContentLoaded", function() {
                         <td>${doc.nombreUsuarioSube}</td>
                         <td>${new Date(doc.fechaSubida).toLocaleDateString()}</td>
                         <td>${doc.tamanoKB} KB</td>
-                        <td><button class="btn btn-info btn-sm print-btn" data-id="${doc.idArchivo}" title="Imprimir"><i class="bi bi-printer"></i></button></td>
+                        <td>
+                            <button class="btn btn-warning btn-sm edit-btn" data-id="${doc.idArchivo}" title="Editar"><i class="bi bi-pencil"></i></button>
+                            <button class="btn btn-info btn-sm view-btn" data-id="${doc.idArchivo}" title="Ver/Imprimir"><i class="bi bi-printer"></i></button>
+                        </td>
                     </tr>`;
                     documentsTableBody.innerHTML += row;
                 });
@@ -59,9 +67,50 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     documentsTableBody.addEventListener('click', function(e) {
-        if (e.target.closest('.print-btn')) { alert('Funcionalidad de impresión no implementada.'); }
+        const targetButton = e.target.closest('button');
+        if (!targetButton) return;
+        const docId = targetButton.dataset.id;
+        
+        if (targetButton.classList.contains('view-btn')) {
+            const downloadUrl = `${API_URL}/documento/${docId}?token=${token}`;
+            window.open(downloadUrl, '_blank');
+        }
+
+        if (targetButton.classList.contains('edit-btn')) {
+            const docToEdit = allDocumentsData.find(doc => doc.idArchivo == docId);
+            if (docToEdit) {
+                document.getElementById('edit-doc-id').value = docToEdit.idArchivo;
+                document.getElementById('edit-nombre').value = docToEdit.nombre;
+                editForm.reset();
+                editModal.show();
+            }
+        }
     });
 
+    editForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const docId = document.getElementById('edit-doc-id').value;
+        const fileInput = document.getElementById('edit-documentoFile');
+        const formData = new FormData();
+        formData.append('nombre', document.getElementById('edit-nombre').value);
+        if (fileInput.files.length > 0) {
+            formData.append('documento', fileInput.files[0]);
+        }
+        try {
+            const response = await fetch(`${API_URL}/documento/${docId}`, {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ${token}` },
+                body: formData
+            });
+            if (response.ok) {
+                editModal.hide();
+                loadDocuments();
+            } else {
+                alert('Error al actualizar el documento.');
+            }
+        } catch (error) { console.error('Error al actualizar:', error); }
+    });
+    
     loadDocuments();
     loadCarpetas();
 });
